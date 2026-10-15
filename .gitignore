@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+output/
+tools/downloads/
+tools/java/
+tools/solution-finder/
+tools/reference/
+tools/bridge/
+tools/ecj.jar
+tetrio-desktop/
+
+# Local dependencies, credentials and exported user settings
+tools/capture/
+.venv/
+.env
+.env.*
+!.env.example
+*.ttc
+*.TTC
+*.pem
+*.key
+docs/夜间续跑交接.md
