@@ -1,0 +1,8 @@
+{
+  "queue": "JLOSTZI | JLO",
+  "hold": null,
+  "rows": ["__________", "__________", "__________", "__________"],
+  "allow_hold": true,
+  "mode": "hard",
+  "target_lines": 4
+}
