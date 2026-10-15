@@ -1,0 +1,10 @@
+import json,sys
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parent.parent))
+from pc_lab.blitz_bounds import table
+from pc_lab.solver import ROOT
+rows=table();path=ROOT/'output/blitz-cycle-score-bounds.json'
+path.write_text(json.dumps(rows,ensure_ascii=False,indent=2),encoding='utf-8')
+body=''.join(f"<tr><td>{r['pps']:.2f}</td><td>{r['pieces']}</td><td>{r['pcs']}</td><td>{r['no_spin_no_quad_min']:,}–{r['no_spin_no_quad_max']:,}</td><td>{r['max_score']:,}</td></tr>" for r in rows)
+(ROOT/'ui/blitz-bounds.html').write_text('''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>连续4＋4＋6理论分数包络</title><link rel="stylesheet" href="/style.css"><main class="blitz-guide"><p><a href="/blitz-research">← 纪录与策略研究</a></p><p class="eyebrow">4 + 4 + 6 / SCORE ENVELOPES</p><h1>连续循环的分数，随速度与消行方式变化</h1><section class="panel"><h2>6 PPS：基线约266万，宽松上界约473万</h2><p>120秒720块、62次PC，始终保持10＋10＋15块的循环，且每轮回到相同袋相位和Hold边界。没有T-spin和消四时，计分包络为2,655,900–2,970,350；允许高价值消行后的宽松上界为4,726,150。都不含下降分。</p><p><strong>472万尚未证明可达。</strong>模型约束格数、PC时点、T库存、等级、B2B和combo，仍没有把具体来块、四格块形状、SRS、finesse和真实操作时间同时求解。</p></section><section class="panel" style="overflow:auto"><table><thead><tr><th>PPS</th><th>块数</th><th>PC</th><th>无T-spin／无消四</th><th>宽松计分上界</th></tr></thead><tbody>'''+body+'''</tbody></table></section><section class="panel"><h2>同一等级的一轮</h2><p>三次PC奖励先提供10500×等级。普通消掉14行，再加普通消行与combo分；无T-spin和消四的抽象单循环包络为11900–12850×等级。</p><p>作为计分示例，五次TSD加一次消四共14行，如果均继承B2B，则PC＋消行基础分为20700×等级，再加combo与下降分。这个例子也不保证可以按任意来块搭出。</p><h2>为什么没有旋转奖励也有范围</h2><p>Single、Double、Triple、combo以及PC最后一块的消行数不同。原生先按当前等级结算再升级；更多消四有时会让PC在更低等级结算，因此不能把奖励简单相加。</p><p>累计228行进入Level15，260行进入16，294行进入17。Level17至少需要735块，即两分钟至少6.125 PPS。速度越高，高等级PC的比例也越高。</p><h2>刷分最高值与稳定性分别记录</h2><p>自动重开的最高完整局不能代表随机稳定水平。各次失败、重开原因、耗时和最好原生录像都要保留；不能跨局累加分数。模型生成文件为output/blitz-cycle-score-bounds.json，完整说明见项目中的“连续DPC理论分数区间.md”。</p></section></main></html>''',encoding='utf-8')
+for r in rows:print(r,flush=True)
