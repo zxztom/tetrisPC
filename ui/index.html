@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PC Lab · 连续全清实验室</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main>
+  <header>
+    <div class="brand"><div class="logo">PC<span>↻</span></div><div><p class="eyebrow">PERFECT CLEAR LAB</p><h1>连续全清实验室</h1></div></div>
+    <div class="phase">PC<span>窗口识别 · 连续循环 · 逐块核对</span></div>
+  </header>
+  <section class="intro"><div><h2>让全清，连续起来。</h2><p>连接 TETR.IO 单人练习，或先在下方检查整段块序的解法。<a href="/manual" target="_blank">阅读无种子操作说明与 35 块图解 ↗</a></p></div><div class="cycle" id="liveCycleBadge"><span class="active">4 行 PC</span><b>→</b><span>4 行 PC</span><b>→</b><span>6 行 DPC</span><b>↻</b></div></section>
+  <section class="panel live-panel">
+    <div><h3>TETR.IO 自动练习</h3><p class="hint">支持七袋、自然下落与 SRS+ 90°；逐次定位当前块。F8 或 Esc 停止；操作期间切走游戏也会停止。</p></div>
+    <p class="hint"><a href="/pure4-manual" target="_blank">七次四行 PC：方法说明与本次实机 70 块图解 ↗</a> · <a href="/setup-clears" target="_blank">搭建中先消一行：十块 PC 图解 ↗</a></p>
+    <div class="input-row"><div><label for="liveCycleMode">玩法策略</label><select id="liveCycleMode"><option value="pure4">纯四行 · 七次 PC / 十袋循环</option><option value="dpc">4＋4＋6 · 三次 PC / 五袋循环</option><option value="blitz" selected>Blitz 得分 · 地面 PC 与消行续打</option></select></div><div><label for="liveRotationRules">游戏旋转表</label><select id="liveRotationRules"><option value="SRS+">TETR.IO 默认 SRS+ 90°</option><option value="SRS">CUSTOM 已设置为标准 SRS</option></select></div></div>
+    <div id="blitzControls" hidden>
+      <label for="blitzStrategy">Blitz 得分策略</label><select id="blitzStrategy"><option value="pc">PC 搜索 · 当前冲分推荐</option><option value="score">冲分实验 · 高覆盖地形＋高收益收尾</option><option value="dpc">4＋4＋6 · PCO / 二次PC / 计分DPC</option></select>
+      <label class="check"><input id="setupFinesse" type="checkbox">搭建地形时优先减少额外按键（实验）</label>
+      <p class="hint">可能牺牲全清机会；仅在它能提高实际 PPS 与最终分数时才有价值。默认关闭，不以零 fault 作为目标。</p>
+      <label for="finessePolicy">按键与 PC 的取舍</label><select id="finessePolicy"><option value="balanced">PC 完成优先 · 允许必要的复杂旋入</option><option value="throughput" selected>冲分与速度优先 · 推荐</option><option value="gravity">高重力少按键 · 低重力优先 PC，20G 起用标准短路线（实验）</option><option value="strict">少按键优先 · 标准短路线，找不到 PC 就消行续打</option><option value="adaptive">收尾折中 · 每 70 块最多一个额外按键，只用于已知 PC 收尾（待实测）</option></select>
+      <label for="blitzPulse">极限档点按方式</label><select id="blitzPulse"><option value="6">保持 6ms</option><option value="0" selected>成对点按 · 同批按下与松开</option><option value="1">短点按 · 保持 1ms（实验）</option></select>
+      <p class="hint">仅在 Blitz＋极限档生效。旋转后需要下落时，先确认实际落下再做下一次动作；短点按不保证整局更快。</p>
+      <label class="check"><input id="farmEnabled" type="checkbox" disabled>自动刷分</label>
+      <button id="farmOptions" class="secondary">查看刷分门槛</button>
+      <div id="farmControls" hidden>
+        <label class="check"><input id="farmContinue" type="checkbox" checked>每局打完后自动开始下一局（新的随机队列）</label>
+        <div class="input-row"><div><label for="farmDrought">连续多少块无 PC 就放弃（0 关闭）</label><input id="farmDrought" type="number" min="0" max="1000" value="0"></div><div><label for="farmAttempts">尝试局数（0 持续）</label><input id="farmAttempts" type="number" min="0" max="10000" value="0"></div></div>
+        <label class="check"><input id="farmBreakCycle" type="checkbox">10 / 20 / 35 块边界未完成 4＋4＋6 就放弃</label>
+        <div class="input-row"><div><label for="farmYield">每块消行估分低于此值就放弃（0 关闭）</label><input id="farmYield" type="number" min="0" max="100000" value="0"></div><div><label for="farmGrace">估分检查从第几块开始</label><input id="farmGrace" type="number" min="0" max="2000" value="35"></div></div>
+      </div>
+      <p id="farmStatus" class="hint">刷分菜单尚未完成实机校准，当前不可开启。先进入游戏；校准后会记录全部尝试，并导出完整局的原生录像，不累计跨局分数。</p>
+      <p id="farmSummary" class="hint" hidden></p>
+      <div class="input-row"><div><label for="blitzProfile">CUSTOM 模拟条件</label><select id="blitzProfile"><option value="blitz">完整 Blitz 曲线 · 两分钟</option><option value="level10">Level 10 重力 · 固定 2.0142G</option><option value="level15">Level 15 · 固定高重力</option><option value="20g">极高速 · 固定 20G</option></select></div><div><label for="blitzSeconds">运行时长（秒）</label><input id="blitzSeconds" type="number" min="1" max="120" value="120"></div></div>
+      <p class="hint">直接玩 SOLO → BLITZ 时选择“完整 Blitz 曲线”；CUSTOM 则载入对应模拟设置。此选择不会修改游戏。PC 预算用完会消行续打。<a href="/blitz-manual" target="_blank">高分策略与实测 ↗</a> · <a href="/blitz-research" target="_blank">纪录4＋4＋6与finesse ↗</a></p>
+      <button id="downloadBlitzProfile" class="secondary">下载所选 CUSTOM 设置 .TTP</button>
+      <p id="blitzScore" class="hint">消行估分不含软降 / 硬降分；以游戏显示的最终得分为准。<a href="/blitz-bounds" target="_blank">连续循环的理论分数区间 ↗</a></p>
+      <p id="blitzCycles" class="hint">4＋4＋6 循环：总次数、当前连续次数与最长连续次数分别记录。核验空场边界、消行和五袋方块来源。</p>
+    </div>
+    <div class="live-controls"><div><label for="cycleCount">连续循环次数（0 为持续）</label><input id="cycleCount" type="number" value="0" min="0" max="1000"></div><div><label for="operationInterval">操作间隔（毫秒）</label><input id="operationInterval" type="number" value="75" min="0" max="2000" step="1"></div><button id="inspectGame" class="secondary">识别窗口</button><button id="startLive" class="primary">开始随机 PC</button><button id="stopLive" class="secondary" disabled>停止</button></div>
+    <div class="input-row"><div><label for="speedPreset">操作速度</label><select id="speedPreset"><option value="extreme">极限 · 无 PPS 限速</option><option value="careful">逐键核对</option><option value="steady">稳定 · 目标 2 PPS</option><option value="fast">快速 · 目标 4 PPS</option><option value="sprint">冲刺 · 目标 6 PPS</option><option value="custom">自定义间隔</option></select></div><div class="speed-readout"><span>实际速度 · 含求解与核对</span><strong id="livePps">— PPS</strong></div></div>
+    <p class="hint" id="timingStatus">速度档位会保存。冲刺档位的空中动作在落地后核对整盘，旋入仍先核对投影；求解停顿和游戏动画会影响实际 PPS。</p>
+    <label class="check live-restart"><input id="restartLive" type="checkbox">开始前重开当前练习（按住 R 三秒，输入法需为英文）</label>
+    <label class="check live-restart"><input id="autoRetry" type="checkbox">PC 无法继续时清空 / 重开并持续尝试（记为断链）</label>
+    <div class="input-row"><div><label for="retryLimit">恢复次数（0 为不限）</label><input id="retryLimit" type="number" value="0" min="0" max="1000"></div><div><label for="configFile">TETR.IO 当前操作配置</label><input id="configFile" type="file" accept=".ttc,.json"></div></div>
+    <div class="button-row"><button id="optimizeConfig" class="secondary">生成所选速度的游戏配置</button><button id="downloadConfig" class="secondary" disabled>下载配置 .TTC</button><button id="applyConfig" class="secondary" hidden>已导入游戏，应用此配置</button></div>
+    <p class="hint" id="configStatus">载入 CONFIG → EXPORT SETTINGS 导出的 .TTC；程序按其中的绑定操作。修改游戏设置后请重新导出并载入。</p>
+    <p id="liveStatus" class="live-status" role="status" aria-live="polite">直接读取当前块、Hold、实际 Next 和棋盘，不需要种子。打开恢复选项后，ZEN 只清棋盘，CUSTOM 重开随机局。</p>
+    <p class="hint" id="liveModeHint">支持慢至中等重力；求解和画面核对需要时间，高速与 20G 尚未验证。画面不一致或失去焦点仍会停止。</p>
+  </section>
+  <div class="workspace">
+    <section class="panel input-panel">
+      <div class="section-title"><h3>起始状态</h3><span>01 / INPUT</span></div>
+      <label for="goal">离线求解目标</label><select id="goal"><option value="4">四行 PC</option><option value="6">六行 PC / DPC 阶段</option><option value="1">剩余一行收尾</option><option value="2">剩余两行收尾</option><option value="3">剩余三行收尾</option><option value="5">剩余五行收尾</option><option value="loop">五包 · 4＋4＋6 循环</option><option value="pure4">十袋 · 七次纯四行循环</option></select>
+      <label for="queue">当前块 + 后续已知块</label>
+      <textarea id="queue" rows="2" spellcheck="false" placeholder="例如 JLOSTZI | JLO">JLOSTZI | JLO</textarea>
+      <div class="hint" id="queueHint">10 个已知块 · | 可标记包边界</div>
+      <div id="pieceQueue" class="piece-queue" aria-label="已知块序"></div>
+      <div class="input-row"><div><label for="hold">初始 Hold</label><select id="hold"><option value="">空</option><option>I</option><option>J</option><option>L</option><option>O</option><option>S</option><option>T</option><option>Z</option></select></div><label class="check"><input id="allowHold" type="checkbox" checked>允许使用 Hold</label></div>
+      <label for="rotationRules">旋转系统</label><select id="rotationRules"><option value="SRS+">TETR.IO SRS+ 90°（ZEN）</option><option value="SRS">标准 SRS 90°（CUSTOM 需匹配设置）</option></select>
+      <label for="mode">操作规则</label><select id="mode"><option value="hard">移动 / 90°旋转 → 硬降</option><option value="soft">含软降和旋入</option></select>
+      <p class="hint">支持旋入。求解后会再次验证每块的操作路径。</p>
+      <div class="editor-heading"><label id="editorLabel">初始棋盘 · 底部四行</label><button id="clearBoard" class="text-button">清空</button></div>
+      <div id="editor" class="editor" aria-label="可编辑的初始棋盘"></div>
+      <p class="hint" id="editorHint">点击格子添加或移除堆积。空棋盘需要放置 10 块。</p>
+      <details><summary>粘贴棋盘文本</summary><textarea id="boardText" rows="4" spellcheck="false" aria-label="棋盘文本" placeholder="每行十格，_ 为空，X 为堆积"></textarea><button id="applyBoard" class="secondary small">应用棋盘</button></details>
+      <div class="button-row"><button id="solve" class="primary">求解 <span>→</span></button><button id="cancel" class="secondary" disabled>停止</button></div>
+      <button id="example" class="text-button example">载入已验证示例</button>
+    </section>
+    <section class="panel replay-panel">
+      <div class="section-title"><h3>棋盘回放</h3><span>02 / REPLAY</span></div>
+      <div class="replay-top"><div><small>累计消行</small><strong id="lines">0 <em>/ 4</em></strong></div><div><small>已放置方块</small><strong id="placed">0 <em>/ 10</em></strong></div><div><small>当前 Hold</small><strong id="currentHold">—</strong></div></div>
+      <div class="board-area"><div class="board-rail">8<br>7<br>6<br>5<br>4<br>3<br>2<br>1</div><canvas id="board" width="360" height="288" role="img" aria-label="空棋盘，十列八行"></canvas><div id="pcBadge" class="pc-badge" hidden>PERFECT<br>CLEAR <span>✓</span></div></div>
+      <div class="board-cols">1　2　3　4　5　6　7　8　9　10</div>
+      <div class="slider-row"><input id="timeline" type="range" min="0" max="0" value="0" disabled aria-label="回放进度"><span id="stepNumber">0 / 0</span></div>
+      <div class="playback"><button id="prev" class="secondary" disabled>上一块</button><button id="play" class="secondary" disabled>▶ 自动回放</button><button id="next" class="secondary" disabled>下一块</button></div>
+      <label class="check landing"><input id="showLanding" type="checkbox">显示该步落地、消行前的棋盘</label>
+      <p id="boardCaption" class="board-caption">求解后可以拖动进度，检查每次放置与消行。</p>
+    </section>
+    <section class="panel result-panel">
+      <div class="section-title"><h3>验证结果</h3><span>03 / CHECK</span></div>
+      <div id="status" class="status idle" role="status" aria-live="polite"><i></i><span id="statusText">准备就绪</span></div>
+      <p id="resultMessage" class="result-message">示例来自合法七袋块序的前十块。点击求解，开始验证。</p>
+      <div class="metrics"><div><span>候选布局</span><b id="candidates">—</b></div><div><span>已检查布局</span><b id="checked">—</b></div><div><span>用时</span><b id="elapsed">—</b></div></div>
+      <div class="section-title steps-title"><h3>放置步骤</h3><button id="export" class="text-button" disabled>导出回放</button></div>
+      <div id="steps" class="steps"><div class="empty-state"><span>↳</span><p>验证通过后，这里会显示<br>每块的位置、Hold 和操作路径。</p></div></div>
+      <div id="stepDetail" class="step-detail" hidden></div>
+      <p id="leftover" class="hint"></p>
+    </section>
+  </div>
+  <footer><span class="dot"></span><p>本机运行 · 单人练习 · 每次落地核对棋盘</p><span class="footer-note">SRS / SRS+ 90° · 重力定位 · 按当前配置操作</span></footer>
+  <div class="milestones"><span class="done">● 4 + 4 + 6 求解</span><span class="done">● 窗口与方块识别</span><span class="done">● 自动按键与核对</span><span>● 随机来块 · 断链重试</span></div>
+  <div id="toast" role="alert" hidden></div>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>
