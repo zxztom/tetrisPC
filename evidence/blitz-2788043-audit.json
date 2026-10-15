@@ -1,0 +1,193 @@
+{
+  "mode": "blitz",
+  "native": {
+    "score": 2788043,
+    "level": 17,
+    "lines": 297,
+    "piecesplaced": 749,
+    "tspins": 17,
+    "finaltime": 120000
+  },
+  "native_pcs": 57,
+  "verified_pieces": 748,
+  "native_finesse": {
+    "combo": 6,
+    "faults": 76,
+    "perfectpieces": 702
+  },
+  "native_inputs": 2538,
+  "corrected_clear_estimate": 2749350,
+  "historical_spin_flags_adjusted": [],
+  "checkpoints": [
+    {
+      "frame": 0,
+      "pieces": 0,
+      "native_score": 0,
+      "estimated_clear_score": 0,
+      "native_minus_clear_estimate": 0
+    },
+    {
+      "frame": 300,
+      "pieces": 34,
+      "native_score": 22963,
+      "estimated_clear_score": 14000,
+      "native_minus_clear_estimate": 8963
+    },
+    {
+      "frame": 600,
+      "pieces": 69,
+      "native_score": 75044,
+      "estimated_clear_score": 63600,
+      "native_minus_clear_estimate": 11444
+    },
+    {
+      "frame": 900,
+      "pieces": 103,
+      "native_score": 141957,
+      "estimated_clear_score": 125550,
+      "native_minus_clear_estimate": 16407
+    },
+    {
+      "frame": 1200,
+      "pieces": 139,
+      "native_score": 232368,
+      "estimated_clear_score": 214650,
+      "native_minus_clear_estimate": 17718
+    },
+    {
+      "frame": 1500,
+      "pieces": 173,
+      "native_score": 298932,
+      "estimated_clear_score": 280050,
+      "native_minus_clear_estimate": 18882
+    },
+    {
+      "frame": 1800,
+      "pieces": 207,
+      "native_score": 403477,
+      "estimated_clear_score": 383500,
+      "native_minus_clear_estimate": 19977
+    },
+    {
+      "frame": 2100,
+      "pieces": 240,
+      "native_score": 484298,
+      "estimated_clear_score": 463600,
+      "native_minus_clear_estimate": 20698
+    },
+    {
+      "frame": 2400,
+      "pieces": 273,
+      "native_score": 581429,
+      "estimated_clear_score": 560050,
+      "native_minus_clear_estimate": 21379
+    },
+    {
+      "frame": 2700,
+      "pieces": 301,
+      "native_score": 667273,
+      "estimated_clear_score": 645550,
+      "native_minus_clear_estimate": 21723
+    },
+    {
+      "frame": 3000,
+      "pieces": 328,
+      "native_score": 723670,
+      "estimated_clear_score": 701450,
+      "native_minus_clear_estimate": 22220
+    },
+    {
+      "frame": 3300,
+      "pieces": 354,
+      "native_score": 858260,
+      "estimated_clear_score": 835650,
+      "native_minus_clear_estimate": 22610
+    },
+    {
+      "frame": 3600,
+      "pieces": 380,
+      "native_score": 959094,
+      "estimated_clear_score": 932400,
+      "native_minus_clear_estimate": 26694
+    },
+    {
+      "frame": 3900,
+      "pieces": 405,
+      "native_score": 1060690,
+      "estimated_clear_score": 1033800,
+      "native_minus_clear_estimate": 26890
+    },
+    {
+      "frame": 4200,
+      "pieces": 433,
+      "native_score": 1074481,
+      "estimated_clear_score": 1047100,
+      "native_minus_clear_estimate": 27381
+    },
+    {
+      "frame": 4500,
+      "pieces": 462,
+      "native_score": 1189185,
+      "estimated_clear_score": 1161500,
+      "native_minus_clear_estimate": 27685
+    },
+    {
+      "frame": 4800,
+      "pieces": 492,
+      "native_score": 1353839,
+      "estimated_clear_score": 1325950,
+      "native_minus_clear_estimate": 27889
+    },
+    {
+      "frame": 5100,
+      "pieces": 523,
+      "native_score": 1525843,
+      "estimated_clear_score": 1497000,
+      "native_minus_clear_estimate": 28843
+    },
+    {
+      "frame": 5400,
+      "pieces": 555,
+      "native_score": 1712164,
+      "estimated_clear_score": 1682500,
+      "native_minus_clear_estimate": 29664
+    },
+    {
+      "frame": 5700,
+      "pieces": 587,
+      "native_score": 1894032,
+      "estimated_clear_score": 1863350,
+      "native_minus_clear_estimate": 30682
+    },
+    {
+      "frame": 6000,
+      "pieces": 621,
+      "native_score": 2083157,
+      "estimated_clear_score": 2051600,
+      "native_minus_clear_estimate": 31557
+    },
+    {
+      "frame": 6300,
+      "pieces": 654,
+      "native_score": 2290317,
+      "estimated_clear_score": 2254100,
+      "native_minus_clear_estimate": 36217
+    },
+    {
+      "frame": 6600,
+      "pieces": 686,
+      "native_score": 2437481,
+      "estimated_clear_score": 2400500,
+      "native_minus_clear_estimate": 36981
+    },
+    {
+      "frame": 6900,
+      "pieces": 718,
+      "native_score": 2581527,
+      "estimated_clear_score": 2543700,
+      "native_minus_clear_estimate": 37827
+    }
+  ],
+  "mismatches": [],
+  "ground_corrections": 0
+}
