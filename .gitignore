@@ -20,3 +20,6 @@ tools/capture/
 *.pem
 *.key
 docs/夜间续跑交接.md
+
+# Independent follow-up Site project
+pc-puzzle/
